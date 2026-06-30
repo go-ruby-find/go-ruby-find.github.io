@@ -1,0 +1,31 @@
+baseURL = "https://go-ruby-find.github.io/"
+title = "go-ruby-find"
+disableKinds = ["taxonomy", "term", "RSS", "sitemap", "404"]
+
+[markup.goldmark.renderer]
+  unsafe = true
+
+[[params.phases]]
+  name = "Traversal engine"
+  status = "ready"
+  blurb = "`Walk(roots, lister, yield, ignoreError)` drives MRI `Find.find`'s traversal: each start path is yielded first, then a depth-first walk of its contents over an injected directory lister."
+[[params.phases]]
+  name = "MRI visit order"
+  status = "ready"
+  blurb = "A directory's children are listed, sorted ascending byte-wise (MRI's `String#<=>`), reversed and unshifted onto a FIFO queue — giving MRI's exact depth-first, ascending-sorted order."
+[[params.phases]]
+  name = "Find.prune control flow"
+  status = "ready"
+  blurb = "Returning `find.ErrPrune` from the yield callback prunes the current path — already yielded, but if a directory, not descended into — the engine's analogue of `throw :prune`."
+[[params.phases]]
+  name = "The Lister seam"
+  status = "ready"
+  blurb = "`Walk` performs no I/O: the host injects `Exist` / `IsDir` / `Children` (Ruby `File.exist?` / `File.lstat` / `Dir.children`). `WalkJoin` accepts a custom path joiner. `Dir`/`File` stay host-side."
+[[params.phases]]
+  name = "Error semantics"
+  status = "ready"
+  blurb = "A missing start path returns `*MissingPathError` before any yield (MRI's `Errno::ENOENT`); a per-entry `IsDir`/`Children` failure mid-walk is swallowed when `ignoreError` is true (MRI's default) and propagated otherwise."
+[[params.phases]]
+  name = "Differential oracle & coverage"
+  status = "ready"
+  blurb = "The visit order is diffed against `ruby -rfind` over real temp trees on the non-Windows lanes; the deterministic in-memory tests reach 100% coverage with no `ruby` present, gofmt + go vet clean, green across all six 64-bit Go arches and three OSes."
