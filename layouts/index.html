@@ -41,11 +41,9 @@
   <div class="hero"><div class="wrap">
     <div>
       <h1 class="head">go-ruby-find</h1>
-      <p class="sub">Ruby's <code>Find</code> traversal algorithm in pure Go — MRI-compatible, no cgo.</p>
-      <div class="cta">
-        <a class="btn btn-primary" href="/docs/">{{ partial "icons/book.html" . }}Documentation</a>
-        <a class="btn btn-ghost" href="https://github.com/go-ruby-find/find">{{ partial "icons/github.html" . }}GitHub</a>
-      </div>
+      <p class="sub">Ruby's <code>Find</code> traversal algorithm in {{ if partial "mantra-on.html" . }}Go{{ else }}pure Go{{ end }} — MRI-compatible, {{ if not (partial "mantra-on.html" $) }}no cgo{{ end }}.</p>
+      {{/* [[params.cta]] in hugo.toml: the kit renders the row */}}
+      {{ partial "cta.html" . }}
       <div class="trust">{{ if not (partial "mantra-on.html" $) }}<span class="pill">pure Go · zero cgo</span>{{ end }}<span class="pill">Find.find traversal</span><span class="pill">depth-first walk</span><span class="pill">byte-wise sort</span><span class="pill">Find.prune</span><span class="pill">injected Lister</span><span class="pill">Dir / File host-side</span><span class="pill">MRI-faithful</span><span class="pill">100% coverage</span><span class="pill">6 arches</span></div>
       <div class="legacy"><div class="badges">
       <a href="/docs/"><img alt="Documentation (MkDocs Material + mike)" src="https://img.shields.io/badge/docs-mkdocs--material-9B1C2E"></a>
